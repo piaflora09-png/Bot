@@ -1,5 +1,6 @@
 import asyncio
 import json
+import os
 import time
 import aiohttp
 import discord
@@ -14,11 +15,15 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
-# --- CONFIGURATION ---
-DISCORD_BOT_TOKEN = "YOUR_DISCORD_BOT_TOKEN"
-GEMINI_API_KEY = "YOUR_FREE_GEMINI_API_KEY"
-DISCORD_WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL"
+# --- CONFIGURATION (Kukunin sa Render Environment Variables) ---
+DISCORD_BOT_TOKEN = os.getenv("DISCORD_BOT_TOKEN") or os.getenv("DISCORD_TOKEN")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 SHOP_URL = "https://vortexshop.onrender.com/"
+
+# Siguraduhing may token na nailagay
+if not DISCORD_BOT_TOKEN:
+    raise ValueError("CRITICAL ERROR: DISCORD_TOKEN or DISCORD_BOT_TOKEN environment variable is missing!")
 
 FREE_MODEL = "gemini-3.5-flash-lite"
 CHECK_INTERVAL_MINUTES = 5
